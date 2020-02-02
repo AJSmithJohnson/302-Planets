@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8112868362407120717}
   - component: {fileID: 8112868362407120714}
   - component: {fileID: 8112868362407120715}
-  - component: {fileID: 8112868362407120712}
   m_Layer: 0
   m_Name: Planet
   m_TagString: Untagged
@@ -176,22 +175,3 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!114 &8112868362407120712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8112868362407120713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fba8d30ff7e3644086d0a6390b148d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  orbitCenter: {fileID: 0}
-  orbitPath: {fileID: 0}
-  magnitude: 10
-  resolution: 40
-  interpolatePointA: 0
-  interpolatePointB: 2
-  percentage: 0

@@ -53,7 +53,7 @@ public class Orbit : MonoBehaviour
     void Update()
     {
         
-        float radius = AnimMath.Lerp(interpA, interpB, BehaviorProperties.Instance.GlobalTime(percentage));
+        float radius = AnimMath.Lerp(interpA, interpB, BehaviorProperties.Instance.GlobalTime());
 
         Vector3 pos = FindOrbitPoint(radius, magX, magY);
         transform.position = pos;

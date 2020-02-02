@@ -10,6 +10,10 @@ public class BehaviorProperties : MonoBehaviour
 
     public float interpValue;
 
+    public float cachedTime;
+
+    public float speed = .01f;
+
     private static BehaviorProperties instance;
 
     public static BehaviorProperties Instance
@@ -27,18 +31,43 @@ public class BehaviorProperties : MonoBehaviour
         instance = this;
     }
 
+    public void SetPause(bool value)
+    {
+        
+        pause = value;
 
+       
+       
+    }
 
-    public float GlobalTime(float valueToIncrease)
+    public float GlobalTime()
     {
         if (!pause)
         {
-            valueToIncrease += Time.time;
-            interpValue = valueToIncrease;
-        }
-
+            interpValue += speed * Time.deltaTime;
+        }   
         return interpValue;
     }
 
-   
+    /*
+    public float GlobalTime(float valueToIncrease)
+    {
+        
+        if (!pause)
+        {
+            //valueToIncrease +=  Time.time;
+            //interpValue = valueToIncrease;
+            interpValue += speed * Time.deltaTime;
+        }
+        if(pause)
+        {
+            cachedTime += speed * Time.deltaTime;
+        }
+       
+
+        return interpValue;
+    }
+    */
+
+
 }
