@@ -36,8 +36,8 @@ public class Orbit : MonoBehaviour
         }
         else
         {
-            magX = Random.Range(1, 3);
-            magY = Random.Range(1, 3);
+            magX = Random.Range(3, 8);
+            magY = Random.Range(3, 8);
         }
 
         
@@ -48,9 +48,10 @@ public class Orbit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float radius = AnimMath.Lerp(interpA, interpB, percentage);
+        
+        float radius = AnimMath.Lerp(interpA, interpB, BehaviorProperties.Instance.GlobalTime(percentage));
 
-        Vector3 pos = FindOrbitPoint(percentage, magX, magY);
+        Vector3 pos = FindOrbitPoint(radius, magX, magY);
         transform.position = pos;
         UpdatePoints();
     }

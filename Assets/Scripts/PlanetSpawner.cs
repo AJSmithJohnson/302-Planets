@@ -69,9 +69,11 @@ public class PlanetSpawner : MonoBehaviour
     {
         GameObject moon = Instantiate(planetPrefab, Vector3.zero, Quaternion.identity);
         moon.name = "Moon";
+
         moonScale = Random.Range(.3f, .7f);
         moon.transform.localScale = new Vector3(moonScale, moonScale, moonScale);
         AttachOrbitScript(moon);
         moon.GetComponent<Orbit>().orbitCenter = planetToAttachTo.transform;
+        moon.GetComponent<Orbit>().isMoon = true;
     }
 }

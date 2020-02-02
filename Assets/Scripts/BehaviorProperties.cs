@@ -1,21 +1,44 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BehaviorProperties 
+public class BehaviorProperties : MonoBehaviour
 {
+
     public bool pause;
 
     public float interpValue;
 
-    // Update is called once per frame
-    public static float SpaceInterpManager()
+    private static BehaviorProperties instance;
+
+    public static BehaviorProperties Instance
     {
-        if(!pause)
+        get
         {
-            interpValue += Time.time;
+            if (instance == null) Debug.LogError("bad");
+
+            return instance;
         }
-        
-        return  interpValue;
     }
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
+
+
+    public float GlobalTime(float valueToIncrease)
+    {
+        if (!pause)
+        {
+            valueToIncrease += Time.time;
+            interpValue = valueToIncrease;
+        }
+
+        return interpValue;
+    }
+
+   
 }
