@@ -40,7 +40,11 @@ public class Orbit : MonoBehaviour
             magY = Random.Range(3, 8);
         }
 
-        
+
+        rotationX = Random.Range(0, 180);
+        rotationY = Random.Range(0, 180);
+        rotationZ = Random.Range(0, 180);
+
         orbitPath = GetComponent<LineRenderer>();
         orbitPath.loop = true;
     }
