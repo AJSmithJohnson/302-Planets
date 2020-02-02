@@ -17,6 +17,15 @@ public class AnimMath
         return new Vector3(x, y, z);
     }
 
+    //Quadratic Interpolation
+    public static Vector3 QuadraticBezier(Vector3 a, Vector3 b, Vector3 c, float p)
+    {
+        Vector3 p1 = Lerp(a, b, p);
+        Vector3 p2 = Lerp(b, c, p);
+
+        return Lerp(p1, p2, p);
+    }
+
     public static float Smooth(float min, float max, float p)
     {
         p = p * p * (3 - 2 * p);

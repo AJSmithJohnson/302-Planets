@@ -18,7 +18,11 @@ public class SmallPlanetOrbit : MonoBehaviour
     //Resolution is the amount of points along the path
     [Range(4, 100)] public int resolution = 8;
 
+    public float interpolatePointA = 0;
 
+    public float interpolatePointB = 2;
+
+    public float percentage = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -30,9 +34,12 @@ public class SmallPlanetOrbit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float radius = AnimMath.Lerp(interpolatePointA, interpolatePointB, percentage);
+
         //We pass in time.time to make the planet move over time
         //We pass in magnitude to adjust how far around the planet the orbit is
-        Vector3 pos = FindOrbitPoint(Time.time, magnitude);//This returns a vector 3 we want to use for our transform.position
+        //So instead of time we can use 
+        Vector3 pos = FindOrbitPoint(radius, magnitude);//This returns a vector 3 we want to use for our transform.position
 
         transform.position = pos;//we set this vector 3 equal to our position to move the planet around
 
