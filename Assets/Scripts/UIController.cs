@@ -11,6 +11,7 @@ public class UIController : MonoBehaviour
 
     public Transform posA;
     public Transform posB;
+    public GameObject systemTransform;
 
     public Button pause;
     public Button play;
@@ -18,6 +19,7 @@ public class UIController : MonoBehaviour
     public Button fastForward;
     public Button prevPlanet;
     public Button nextPlanet;
+    public Button wholeSystem;
 
     bool showingUI = true;
 
@@ -36,6 +38,7 @@ public class UIController : MonoBehaviour
         fastForward.onClick.AddListener(FastFoward);
         prevPlanet.onClick.AddListener(PrevPlanet);
         nextPlanet.onClick.AddListener(NextPlanet);
+        wholeSystem.onClick.AddListener(UpdateCameraSystem);
     }
 
    
@@ -81,6 +84,11 @@ public class UIController : MonoBehaviour
     private void UpdateCamera()
     {
         mainCamera.GetComponent<CameraController>().planetToFollow = BehaviorProperties.Instance.PlanetTransform();
+    }
+    private void UpdateCameraSystem()
+    {
+        print("In update camera system");
+        mainCamera.GetComponent<CameraController>().planetToFollow = systemTransform;
     }
 
     private void RevealButtons()
