@@ -481,11 +481,11 @@ MonoBehaviour:
   planetPrefab: {fileID: 8112868362407120713, guid: 52a4dd524ea130a4d8233c3df284f076,
     type: 3}
   planetNumber: 10
-  moonOdds: 0.3
+  moonOdds: 0.247
   moonWanted: 10
   currentMoons: 0
-  moreMoons: 0
-  moonRolls: 0
+  moreMoons: 1
+  moonRolls: 5
   moonScale: 0.5
 --- !u!4 &255950910
 Transform:

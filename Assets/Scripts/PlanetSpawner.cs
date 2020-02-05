@@ -30,15 +30,17 @@ public class PlanetSpawner : MonoBehaviour
             GameObject planet = Instantiate(planetPrefab, Vector3.zero, Quaternion.identity);
             AttachOrbitScript(planet);
             
-            if(moonWanted < 0 && moreMoons == true)
+            if(currentMoons >= moonWanted/2 && moreMoons == true)
             {
                 for(int f = 0; f < moonRolls; f++)
                 {
-                    float moonChanceB = Random.Range(.1f, .9f);
+                    print("here");
+                    float moonChanceB = Random.Range(.1f, .3f);
                     moonOdds += moonChanceB;
-                    float moonChance = Random.Range(.5f, .7f);
+                    float moonChance = Random.Range(.6f, 1);
                     if (moonOdds > moonChance)
                     {
+                        moonOdds = Random.Range(.1f, .4f);
                         HasMoon(planet);
                     }
                         
@@ -48,6 +50,7 @@ public class PlanetSpawner : MonoBehaviour
             if(currentMoons < moonWanted)
             {
                 HasMoon(planet);
+                currentMoons++;
             }
             
             
