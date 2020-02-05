@@ -61,13 +61,16 @@ public class PlanetSpawner : MonoBehaviour
     void AttachOrbitScript(GameObject planet)
     {
         planet.AddComponent<Orbit>();
-        
+
+        BehaviorProperties.Instance.AddPlanetToList(planet);//Add planets to Behavior Properties list
     }
 
 
     void HasMoon(GameObject planetToAttachTo)
     {
         GameObject moon = Instantiate(planetPrefab, Vector3.zero, Quaternion.identity);
+
+        BehaviorProperties.Instance.AddPlanetToList(moon);//Add planets to Behavior Properties list
         moon.name = "Moon";
 
         moonScale = Random.Range(.3f, .7f);

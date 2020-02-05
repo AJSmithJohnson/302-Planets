@@ -5,8 +5,19 @@ using UnityEngine;
 
 public class BehaviorProperties : MonoBehaviour
 {
+    List<GameObject> planets = new List<GameObject>();
 
-    public bool pause;
+    public Vector3 foci = Vector3.zero;
+
+    public int fociNumber = 0;
+
+    public int totalFoci = 0;
+
+    public bool pause = false;
+
+    public bool rewind = false;
+
+    public bool fastF = false;
 
     public float interpValue;
 
@@ -15,6 +26,7 @@ public class BehaviorProperties : MonoBehaviour
     public float speed = .01f;
 
     private static BehaviorProperties instance;
+    public float fastSpeed = .05f;
 
     public static BehaviorProperties Instance
     {
@@ -26,26 +38,104 @@ public class BehaviorProperties : MonoBehaviour
         }
     }
 
+    public void AddPlanetToList(GameObject planet)
+    {
+        planets.Add(planet);
+    }
+    public void SetFociTotal()
+    {
+        totalFoci = planets.Count;
+    }
+    public void NextPlanet()
+    {
+        
+        if(fociNumber < planets.Count-1)
+        {
+            fociNumber++;
+            print(fociNumber);
+        }
+        else
+        {
+            fociNumber = 0;
+        }
+    }
+    public void PrevPlanet()
+    {
+        if(fociNumber > 0)
+        {
+            fociNumber--;
+            print(fociNumber);
+        }
+        else
+        {
+            fociNumber = planets.Count-1;
+        }
+    }
+
+    public void SetFoci()
+    {
+
+    }
+
+    public GameObject PlanetTransform()
+    {
+        if (planets[fociNumber] != null)
+        {
+            return planets[fociNumber];
+        }
+        else return null;
+    }
+
     private void Awake()
     {
         instance = this;
     }
 
-    public void SetPause(bool value)
+    public void SetPause()
     {
         
-        pause = value;
+        pause = true;
+        fastF = false;
+        rewind = false;
+    }
 
-       
-       
+    public void SetPlay()
+    {
+        pause = false;
+        fastF = false;
+        rewind = false;
+    }
+
+    public void SetRewind()
+    {
+        pause = false;
+        fastF = false;
+        rewind = true;
+    }
+
+    public void SetFastFoward()
+    {
+        pause = false;
+        fastF = true;
+        rewind = false;
     }
 
     public float GlobalTime()
     {
-        if (!pause)
+        if(rewind)
+        {
+            interpValue -= speed * Time.deltaTime;
+        }
+        else if(fastF)
+        {
+            interpValue += fastSpeed * Time.deltaTime;
+        }
+        else if (!pause)
         {
             interpValue += speed * Time.deltaTime;
-        }   
+        }
+        
+
         return interpValue;
     }
 

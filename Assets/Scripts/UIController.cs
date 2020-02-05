@@ -6,15 +6,20 @@ using System;
 
 public class UIController : MonoBehaviour
 {
+
+    public GameObject mainCamera;
+
     public Transform posA;
     public Transform posB;
 
     public Button pause;
-    public Button player;
+    public Button play;
     public Button rewind;
     public Button fastForward;
+    public Button prevPlanet;
+    public Button nextPlanet;
 
-    bool showingUI;
+    bool showingUI = true;
 
     bool moveButtonBack = false;
 
@@ -24,32 +29,58 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        HideButtons();
+        RevealButtons();
         pause.onClick.AddListener(Pause);
-        
+        play.onClick.AddListener(Play);
+        rewind.onClick.AddListener(Rewind);
+        fastForward.onClick.AddListener(FastFoward);
+        prevPlanet.onClick.AddListener(PrevPlanet);
+        nextPlanet.onClick.AddListener(NextPlanet);
     }
+
+   
 
     private void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+       /* if (Input.GetKeyDown(KeyCode.Escape))
         {
             RevealButtons();
-        }
+        }*/
     }
 
     private void Pause()
     {
-        if(!doPause)
-        {
-            BehaviorProperties.Instance.SetPause(true);
-            doPause = true;
-        }
-        else
-        {
-            BehaviorProperties.Instance.SetPause(false);
-            doPause = false;
-        }
-        
+            BehaviorProperties.Instance.SetPause();
+          //  doPause = true;//Not sure I need this anymore
+    }
+    private void Play()
+    {
+        BehaviorProperties.Instance.SetPlay();
+    }
+    private void FastFoward()
+    {
+        BehaviorProperties.Instance.SetFastFoward();
+    }
+    private void Rewind()
+    {
+        BehaviorProperties.Instance.SetRewind();
+    }
+    private void PrevPlanet()
+    {
+        print("Here");
+        BehaviorProperties.Instance.PrevPlanet();
+        UpdateCamera();
+    }
+    private void NextPlanet()
+    {
+        print("In next planet");
+        BehaviorProperties.Instance.NextPlanet();
+        UpdateCamera();
+    }
+
+    private void UpdateCamera()
+    {
+        mainCamera.GetComponent<CameraController>().planetToFollow = BehaviorProperties.Instance.PlanetTransform();
     }
 
     private void RevealButtons()
@@ -75,6 +106,21 @@ public class UIController : MonoBehaviour
     {
         pause.gameObject.SetActive(false);
         pause.enabled = false;
+
+        play.gameObject.SetActive(false);
+        play.enabled = false;
+
+        rewind.gameObject.SetActive(false);
+        rewind.enabled = false;
+
+        fastForward.gameObject.SetActive(false);
+        fastForward.enabled = false;
+
+        prevPlanet.gameObject.SetActive(false);
+        prevPlanet.enabled = false;
+
+        nextPlanet.gameObject.SetActive(false);
+        nextPlanet.enabled = false;
         //LerpButtons(pause.gameObject);
     }
 
@@ -82,6 +128,21 @@ public class UIController : MonoBehaviour
     {
         pause.gameObject.SetActive(true);
         pause.enabled = true;
+
+        play.gameObject.SetActive(true);
+        play.enabled = true;
+
+        rewind.gameObject.SetActive(true);
+        rewind.enabled = true;
+
+        fastForward.gameObject.SetActive(true);
+        fastForward.enabled = true;
+
+        prevPlanet.gameObject.SetActive(true);
+        prevPlanet.enabled = true;
+
+        nextPlanet.gameObject.SetActive(true);
+        nextPlanet.enabled = true;
         //LerpButtons(pause.gameObject);
 
         //Get these guys working later
