@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// Remember to add stuff from wednesday 2/5 into here
+/// </summary>
 public class AnimMath
 {
     public static float Lerp(float min, float max, float p)
