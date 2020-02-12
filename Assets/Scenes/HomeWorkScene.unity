@@ -2038,6 +2038,7 @@ GameObject:
   - component: {fileID: 1874969511}
   - component: {fileID: 1874969514}
   - component: {fileID: 1874969515}
+  - component: {fileID: 1874969516}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2140,7 +2141,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1874969510}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e892568949345654bad8e680031d79d3, type: 3}
   m_Name: 
@@ -2149,6 +2150,7 @@ MonoBehaviour:
   percent: 0
   animationTime: 5
   animationTimeCurrent: 0
+  wantToTrack: 1
   curve:
     serializedVersion: 2
     m_Curve:
@@ -2175,6 +2177,48 @@ MonoBehaviour:
     m_RotationOrder: 4
   offSet: {x: 0, y: 0, z: -10}
   radius: 15
+--- !u!114 &1874969516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874969510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef2198c4886aa4446995a8938264c1dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  planetTransform: {fileID: 0}
+  animationTime: 2
+  animationTimeCurrent: 0
+  tracking: 1
+  curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  offset: {x: 0, y: 0, z: 0}
+  rotateSpeed: 0
 --- !u!1 &2143194909
 GameObject:
   m_ObjectHideFlags: 0
