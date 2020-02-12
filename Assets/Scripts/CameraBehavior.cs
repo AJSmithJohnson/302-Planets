@@ -27,8 +27,13 @@ public class CameraBehavior : MonoBehaviour
 
     private float distanceFloat;
 
-    Vector3 currentEaseTarget;
+    public Vector3 currentEaseTarget;
 
+    public float cameraSpeed;
+    public Transform camBody;
+    public float sensitivity;
+    public float xRotation;
+    public float yRotation;
     //VECTOR3.SmoothDamp is something we should use for camera movement
 
 
@@ -42,6 +47,15 @@ public class CameraBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetMouseButtonDown(2))
+        {
+            BreakTarget();
+        }
+        if(!tracking)
+        {
+            GetPlayerInput();
+        }
+
         if(tracking)
         {
             if(planetTransform != null)
@@ -56,6 +70,35 @@ public class CameraBehavior : MonoBehaviour
         }
     }//End update
 
+    private void GetPlayerInput()
+    {
+        float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
+
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -180, 180);
+
+        camBody.localRotation = Quaternion.Euler(xRotation, mouseY, 0f);
+
+        if(Input.GetKey(KeyCode.S))
+        {
+            camBody.transform.position -= (cameraSpeed * transform.forward) * Time.deltaTime;
+        }
+        if(Input.GetKey(KeyCode.W))
+        {
+            camBody.transform.position += (cameraSpeed * transform.forward) * Time.deltaTime;
+        }
+        if(Input.GetKey(KeyCode.Space))
+        {
+            camBody.transform.position += (cameraSpeed * Vector3.up) * Time.deltaTime;
+        }
+        if(Input.GetKey(KeyCode.LeftShift))
+        {
+            camBody.transform.position -= (cameraSpeed * Vector3.up) * Time.deltaTime;
+        }
+
+    }
+
     private void SetRotateDirection()
     {
         rotateDirection = planetTransform.transform.position - transform.position;
@@ -67,9 +110,19 @@ public class CameraBehavior : MonoBehaviour
 
     public void GetNewTarget(GameObject planetToTrack)
     {
+        animationTimeCurrent = 0;
         currentTransform.position = transform.position;
         planetTransform = planetToTrack;
         tracking = true;
+    }
+
+
+    public void BreakTarget()
+    {
+        camBody = transform;
+        animationTimeCurrent = 0;
+        //need to store current transform on update constantly
+        tracking = false;
     }
 
     public void CalcPosition()
