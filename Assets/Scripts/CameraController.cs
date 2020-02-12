@@ -20,6 +20,8 @@ public class CameraController : MonoBehaviour
 
     public Transform body;
 
+
+    //The position of the camera at start and then the position we want to track from
     private Transform pos1;
 
     private Transform pos2;
@@ -32,15 +34,16 @@ public class CameraController : MonoBehaviour
 
     public bool wantCursor = false;
 
-    public bool trackFoward = true;
+    public bool trackFoward = false;
 
     [Range(0, 1)] public float percent;
     // Start is called before the first frame update
     void Start()
     {
+        //We want to set this to the current transform.position
         pos1.position = transform.position;
         
-       // Cursor.lockState = CursorLockMode.Locked;
+       
     }
 
     private void Update()

@@ -1123,7 +1123,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 746638195}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 255950912}
+        m_MethodName: NextPlanet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &746638195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2134,10 +2145,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e892568949345654bad8e680031d79d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentTransform: {fileID: 0}
   planetTransform: {fileID: 0}
   percent: 0
-  animationTime: 1
+  animationTime: 5
   animationTimeCurrent: 0
   curve:
     serializedVersion: 2
@@ -2163,8 +2173,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  offSet: {x: 0, y: 0, z: 0}
-  radius: 10
+  offSet: {x: 0, y: 0, z: -10}
+  radius: 15
 --- !u!1 &2143194909
 GameObject:
   m_ObjectHideFlags: 0

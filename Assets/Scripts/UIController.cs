@@ -32,13 +32,13 @@ public class UIController : MonoBehaviour
     void Start()
     {
         RevealButtons();
-        pause.onClick.AddListener(Pause);
+       /* pause.onClick.AddListener(Pause);
         play.onClick.AddListener(Play);
         rewind.onClick.AddListener(Rewind);
         fastForward.onClick.AddListener(FastFoward);
         prevPlanet.onClick.AddListener(PrevPlanet);
         nextPlanet.onClick.AddListener(NextPlanet);
-        wholeSystem.onClick.AddListener(UpdateCameraSystem);
+        wholeSystem.onClick.AddListener(UpdateCameraSystem);*/
     }
 
    
@@ -60,21 +60,21 @@ public class UIController : MonoBehaviour
     {
         BehaviorProperties.Instance.SetPlay();
     }
-    private void FastFoward()
+    public void FastFoward()
     {
         BehaviorProperties.Instance.SetFastFoward();
     }
-    private void Rewind()
+    public void Rewind()
     {
         BehaviorProperties.Instance.SetRewind();
     }
-    private void PrevPlanet()
+    public void PrevPlanet()
     {
         print("Here");
         BehaviorProperties.Instance.PrevPlanet();
         UpdateCamera();
     }
-    private void NextPlanet()
+    public void NextPlanet()
     {
         print("In next planet");
         BehaviorProperties.Instance.NextPlanet();
@@ -83,7 +83,8 @@ public class UIController : MonoBehaviour
 
     private void UpdateCamera()
     {
-        mainCamera.GetComponent<CameraController>().planetToFollow = BehaviorProperties.Instance.PlanetTransform();
+        mainCamera.GetComponent<CamFollow>().wantToTrack = true;
+        mainCamera.GetComponent<CamFollow>().planetTransform = BehaviorProperties.Instance.PlanetTransform();
     }
     private void UpdateCameraSystem()
     {

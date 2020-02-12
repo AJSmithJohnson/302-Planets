@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CamFollow : MonoBehaviour
 {
-    [SerializeField] private Transform currentTransform;
-    [SerializeField] private Transform planetTransform;
+    private Transform currentTransform;
+    public GameObject planetTransform;
 
     [Range(0, 1)] public float percent;
 
@@ -13,11 +13,15 @@ public class CamFollow : MonoBehaviour
 
     public float animationTimeCurrent = 0;
 
-    bool wantToTrack = true;
+    public bool wantToTrack = true;
 
     public AnimationCurve curve;
 
     public Vector3 offSet;
+
+    private Vector3 distance;
+
+    private float distanceFloat;
 
     Vector3 currentEaseTarget;
 
@@ -25,37 +29,56 @@ public class CamFollow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        currentTransform = transform;
+        wantToTrack = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //print(planetTransform);
+        ///print(distanceFloat);
+        print(wantToTrack);
+        if (wantToTrack)
+        {
+            if(planetTransform != null)
+            {
+                distance.x = planetTransform.transform.position.x - transform.position.x;
+                distance.y = planetTransform.transform.position.y - transform.position.y;
+                distance.z = planetTransform.transform.position.z - transform.position.z;
+                distanceFloat = Mathf.Sqrt(distance.x * distance.x + distance.y * distance.y + distance.z * distance.z);
+                print(distanceFloat);
+
+            }
+             
+        }
         //Radial detection for this garbage
-        float distanceX = planetTransform.position.x - transform.position.x;
-        float distanceY = planetTransform.position.y - transform.position.y;
-        float distanceZ = planetTransform.position.z - transform.position.z;
-        float distance = Mathf.Sqrt(distanceX * distanceX + distanceY * distanceY + distanceZ * distanceZ);
-        print(distance);
+        
 
         //Need to tweak and make these values modular so that we can make this system a bit more rebust
         //Off the top of my head we should probably keep the array of planets
         //and then when I click the button I flip a variable to swap from thing to thing and blah blah blah blahblah blah blaaaahhh
-        if(radius > distance)
-        {
-            wantToTrack = false;
-        }
-        if(wantToTrack)
+       if(planetTransform != null && radius > distanceFloat)
+       {
+           //wantToTrack = false;
+       }
+        else if(wantToTrack)
         {
             animationTimeCurrent += Time.deltaTime;
             percent = animationTimeCurrent / animationTime;
             CalcPosition();
         }
-        else
+       /* if(!wantToTrack)
         {
-            transform.position = Vector3.Lerp(transform.position, planetTransform.transform.position, .5f);
-            transform.LookAt(planetTransform.transform);
-        }
+            print("In else block");
+            
+
+                print("Can't break into here?");
+                transform.position = Vector3.Lerp(transform.position, planetTransform.transform.position - offSet, .5f);
+                transform.LookAt(planetTransform.transform);
+            
+            
+        }*/
         
     }
 
@@ -65,9 +88,9 @@ public class CamFollow : MonoBehaviour
 
         float p = curve.Evaluate(percent);
 
-        currentEaseTarget = AnimMath.Lerp(currentTransform.position, planetTransform.position, p);
+        currentEaseTarget = AnimMath.Lerp(currentTransform.position, planetTransform.transform.position, p);
 
-        transform.position = AnimMath.Dampen(transform.position, currentEaseTarget, .1f);
-        transform.LookAt(planetTransform);
+        transform.position = AnimMath.Dampen(transform.position, currentEaseTarget, .6f);
+        transform.LookAt(planetTransform.transform.position);
     }
 }
