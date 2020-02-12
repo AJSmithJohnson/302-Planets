@@ -78,7 +78,8 @@ public class UIController : MonoBehaviour
     {
         print("In next planet");
         BehaviorProperties.Instance.NextPlanet();
-        UpdateCamera();
+        // UpdateCamera();
+        UpdateCameraBehaviors();
     }
 
     private void UpdateCamera()
@@ -90,6 +91,12 @@ public class UIController : MonoBehaviour
     {
         print("In update camera system");
         mainCamera.GetComponent<CameraController>().planetToFollow = systemTransform;
+    }
+    private void UpdateCameraBehaviors()
+    {
+        // mainCamera.GetComponent<CameraBehavior>().tracking = true;
+        // mainCamera.GetComponent<CameraBehavior>().planetTransform = BehaviorProperties.Instance.PlanetTransform();
+        mainCamera.GetComponent<CameraBehavior>().GetNewTarget(BehaviorProperties.Instance.PlanetTransform());
     }
 
     private void RevealButtons()
