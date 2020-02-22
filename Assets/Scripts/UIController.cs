@@ -7,6 +7,18 @@ using System;
 public class UIController : MonoBehaviour
 {
 
+    public delegate void PauseGame();
+    public static event PauseGame triggerPause;
+
+    public delegate void SpeedUp();
+    public static event SpeedUp speedUp;
+
+    public delegate void RewindPlanets();
+    public static event RewindPlanets rewindPlanets;
+
+    public delegate void Normal();
+    public static event Normal normal;
+
     public GameObject mainCamera;
 
     public Transform posA;
@@ -51,23 +63,27 @@ public class UIController : MonoBehaviour
         }*/
     }
 
-    private void Pause()
+    public void Pause()
     {
-            BehaviorProperties.Instance.SetPause();
+        // BehaviorProperties.Instance.SetPause();
+        triggerPause();
           //  doPause = true;//Not sure I need this anymore
     }
-    private void Play()
+    public void Play()
     {
-        BehaviorProperties.Instance.SetPlay();
-    }
-    public void FastFoward()
-    {
-        BehaviorProperties.Instance.SetFastFoward();
+        //BehaviorProperties.Instance.SetPlay();
+        normal();
     }
     public void Rewind()
     {
-        BehaviorProperties.Instance.SetRewind();
+        //BehaviorProperties.Instance.SetRewind();
+        rewindPlanets();
     }
+    public void FastFoward()
+    {
+        speedUp();
+    }
+
     public void PrevPlanet()
     {
         print("Here");

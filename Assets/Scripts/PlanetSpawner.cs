@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlanetSpawner : MonoBehaviour
 {
+    //The planet prefab object we use to spawn planets
     public GameObject planetPrefab;
     //Amount of planets to spawn
     [Range(8, 32)]public int planetNumber = 10;
@@ -12,25 +13,39 @@ public class PlanetSpawner : MonoBehaviour
     //Amount of moons to spawn
     [Range(8, 32)] public int moonWanted = 10;
 
-    public int currentMoons;
-
+    
     public bool moreMoons;
 
+    /// <summary>
+    /// How many times a planet should roll for a moon
+    /// </summary>
     public int moonRolls;
 
+    /// <summary>
+    /// The scale of the moons
+    /// </summary>
     public float moonScale = .5f;
-    
+
+    /// <summary>
+    /// The current amount of moons spawned
+    /// </summary>
+    private int currentMoons;
+
     void Start()
     {
+        //Populate an array of planets
         int[] planetArray = new int[planetNumber];
+        //Populate an array of moons
         int[] moonArray = new int[moonWanted];
 
+        //Loop through the length of our planet array
         for(int i = 0; i < planetArray.Length; i++)
         {
             GameObject planet = Instantiate(planetPrefab, Vector3.zero, Quaternion.identity);
             AttachOrbitScript(planet);
             
-            if(currentMoons >= moonWanted/2 && moreMoons == true)
+            //IF THERE ARE BIG ERRORS FLIP THIS TO GREATER THAN OR EQUAL TO
+            if(currentMoons <= moonWanted/2 && moreMoons == true)
             {
                 for(int f = 0; f < moonRolls; f++)
                 {

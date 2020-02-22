@@ -133,7 +133,7 @@ public class CameraBehavior : MonoBehaviour
 
         currentEaseTarget = AnimMath.Lerp(currentTransform.position, planetTransform.transform.position, p);
 
-        transform.position = AnimMath.Dampen(transform.position, currentEaseTarget, .1f);
+        transform.position = AnimMath.Dampen(transform.position, currentEaseTarget - offset, .1f);
         
     }
 }

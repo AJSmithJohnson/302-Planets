@@ -29,11 +29,6 @@ public class Orbit : MonoBehaviour
     public bool isMoon = false;
 
     /// <summary>
-    /// A reference to our line renderer component
-    /// </summary>
-    public LineRenderer orbitPath;
-
-    /// <summary>
     /// The magnitude X of the path
     /// </summary>
     [Range(1, 60)] public float magX = 6;
@@ -41,7 +36,6 @@ public class Orbit : MonoBehaviour
     /// The magnitude Y of the path
     /// </summary>
     [Range(1, 60)] public float magY = 6;
-
     /// <summary>
     /// The points along the path
     /// </summary>
@@ -49,18 +43,32 @@ public class Orbit : MonoBehaviour
 
 
     /// <summary>
+    /// A reference to our line renderer component
+    /// </summary>
+    private LineRenderer orbitPath;
+
+    /// <summary>
     /// The values this should interpolate between so we can scrub forward and back\
     /// </summary>
-    public float interpA = 0;
-    public float interpB = 2;
-
+    private float interpA = 0;
+    private float interpB = 2;
+    private float interpValue = 0;
 
     /// <summary>
     /// The percentage we are along the path
     /// </summary>
-    public float percentage = 0;
+    //private float percentage = 0;
 
+    /// <summary>
+    /// The speed of the planets moving
+    /// </summary>
+    private float speed = .5f;
 
+    /// <summary>
+    /// Wiether or not our planet should be paused
+    /// </summary>
+    private bool pause;
+   
 
     // Start is called before the first frame update
     void Start()
@@ -77,23 +85,70 @@ public class Orbit : MonoBehaviour
              magY = Random.Range(3, 8);
          }*/
         #endregion
+        
+
+        UIController.triggerPause += Pause;
+        UIController.normal += Normal;
+        UIController.rewindPlanets += Rewind;
+        UIController.speedUp += SpeedUp;
+
 
         //Set values depending on if this is a moon or not
         SetMags(isMoon);
         //Set rotations for the path
         SetRotations();
-        
+     
+
         //Get the LineRenderer component and store it in the orbitPath variable
         orbitPath = GetComponent<LineRenderer>();
         //Make the orbitPath loop
         orbitPath.loop = true;
+    }//End of start method
+
+
+    public void Pause()
+    {
+        pause = !pause;
+    }
+
+    public void Normal()
+    {
+        if (pause) pause = !pause;
+        speed = .5f;
+    }
+
+    public void SpeedUp()
+    {
+        if (pause) pause = !pause;
+        speed += .5f;
+    }
+
+    public void Rewind()
+    {
+        if (pause) pause = !pause;
+        speed = - 1.5f;
+    }
+
+    public float InterpTime()
+    {
+        if (!pause)
+        {
+            interpValue += speed * Time.deltaTime;
+        }
+        return interpValue;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(!pause)
+        {
+            //lerpPercent += planetSpeed * Time.deltaTime;
+        }
+
         //this float radius is lerping from interpA to interpB using a time value inherited from BehaviorProperties
-        float radius = AnimMath.Lerp(interpA, interpB, BehaviorProperties.Instance.GlobalTime());
+        //float radius = AnimMath.Lerp(interpA, interpB, BehaviorProperties.Instance.GlobalTime());
+        float radius = AnimMath.Lerp(interpA, interpB, InterpTime());
 
         //We call the FindOrbitPoint method and pass in:
         //Our radius which is the point along the path we want to be right now
@@ -107,10 +162,10 @@ public class Orbit : MonoBehaviour
 
         //We update the points in the path
         UpdatePoints();
-    }
-
+    }//End of Update method
 
    
+
     /// <summary>
     /// This returns a vector 3 value that we use to
     /// A: Get our current position along the path and set our object to that
@@ -174,6 +229,7 @@ public class Orbit : MonoBehaviour
             //We set the path's positions equal to the points positions
             orbitPath.SetPositions(points);
      }//End of UpdatePoints() method
+
 
     /// <summary>
     /// Set the magnitude of the paths
