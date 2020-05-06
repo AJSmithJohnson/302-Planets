@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(LineRenderer))]
 public class Orbit : MonoBehaviour
 {
+    Renderer rend;
+
     /// <summary>
     /// rotation along the Y axis also referred to as ____________
     /// </summary>
@@ -68,11 +70,41 @@ public class Orbit : MonoBehaviour
     /// Wiether or not our planet should be paused
     /// </summary>
     private bool pause;
-   
 
+    public float color1;
+    public float color2;
+    public float color3;
+    public float scrollX;
+    public float scrollY;
+    public float emission;
+
+    public float rotationSpeed;
+    public float regularRotationSpeed;
     // Start is called before the first frame update
     void Start()
     {
+        rend = GetComponent<Renderer>();
+        rend.material.shader = Shader.Find("Custom/PlanetShader");
+
+        color1 = Random.Range(0.0f, 1.0f);
+        color2 = Random.Range(0.0f, 1.0f);
+        color3 = Random.Range(0.0f, 1.0f);
+        scrollX = Random.Range(-10, 10);
+        scrollY = Random.Range(-10, 10);
+        emission = Random.Range(.2f, .5f);
+        rotationSpeed = Random.Range(1, 20);
+        regularRotationSpeed = rotationSpeed;
+        if (isMoon)
+        {
+            emission = Random.Range(.5f, 2.0f);
+        }
+        rend.material.SetFloat("_Color1", color1);
+        rend.material.SetFloat("_Color2", color2);
+        rend.material.SetFloat("_Color3", color3);
+        rend.material.SetFloat("_Emission", emission);
+        rend.material.SetFloat("_ScrollX", scrollX);
+        rend.material.SetFloat("_ScrollY", scrollY);
+
         #region OldCode For Reference
         /* if(!isMoon)
          {
@@ -85,7 +117,7 @@ public class Orbit : MonoBehaviour
              magY = Random.Range(3, 8);
          }*/
         #endregion
-        
+
 
         UIController.triggerPause += Pause;
         UIController.normal += Normal;
@@ -115,18 +147,21 @@ public class Orbit : MonoBehaviour
     {
         if (pause) pause = !pause;
         speed = .5f;
+        rotationSpeed = regularRotationSpeed;
     }
 
     public void SpeedUp()
     {
         if (pause) pause = !pause;
         speed += .5f;
+        rotationSpeed += .5f;
     }
 
     public void Rewind()
     {
         if (pause) pause = !pause;
         speed = - 1.5f;
+        rotationSpeed = .5f;
     }
 
     public float InterpTime()
@@ -159,6 +194,8 @@ public class Orbit : MonoBehaviour
 
         //We set the Vector3 pos we get above to our transform position
         transform.position = pos;
+
+        transform.Rotate(Time.deltaTime * rotationSpeed, Time.deltaTime * rotationSpeed, Time.deltaTime * rotationSpeed);
 
         //We update the points in the path
         UpdatePoints();
